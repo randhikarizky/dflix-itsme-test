@@ -11,6 +11,8 @@ import { ThemeProvider, useTheme } from "@mui/material";
 import Layout from "@/app/global/components/layout/Layout";
 import { CustomRoutingProvider } from "@/app/global/providers/CustomRoutingProvider";
 
+import "@/theme/styles/global.css";
+
 dayjs.extend(relativeTime);
 
 const queryClient = new QueryClient({

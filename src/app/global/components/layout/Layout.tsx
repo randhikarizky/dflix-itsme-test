@@ -2,6 +2,7 @@
 
 import { Box, Container } from "@mui/material";
 import React from "react";
+import Navbar from "./Navbar";
 
 interface Props {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ export default function Layout(props: Props) {
         flexDirection: "column",
       }}
     >
+      <Navbar />
       <Box
         component={"main"}
         sx={{

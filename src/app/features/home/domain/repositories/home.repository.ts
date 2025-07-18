@@ -12,4 +12,12 @@ export interface HomeRepository {
   getAllDiscoverTVs(
     request: FilterRequest & Record<string, any>,
   ): Promise<List<DiscoverTVEntity>>;
+
+  getAllMovieList(
+    request: FilterRequest & Record<string, any>,
+  ): Promise<List<DiscoverMovieEntity>>;
+
+  getSearch(
+    request: FilterRequest & Record<string, any>,
+  ): Promise<List<DiscoverTVEntity>>;
 }

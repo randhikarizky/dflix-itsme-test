@@ -5,7 +5,6 @@ import { homeService } from "../../data/repositories/home.repository.impl";
 export const useGetAllDiscoverMovies = (
   request: FilterRequest & Record<string, any>,
 ) => {
-
   const controller = useQuery({
     queryKey: ["get-all-discovery-movies"],
     queryFn: () => homeService.getAllDiscoverMovies(request),
@@ -19,10 +18,35 @@ export const useGetAllDiscoverMovies = (
 export const useGetAllDiscoverTVs = (
   request: FilterRequest & Record<string, any>,
 ) => {
-
   const controller = useQuery({
     queryKey: ["get-all-discovery-tvs"],
     queryFn: () => homeService.getAllDiscoverTVs(request),
+    enabled: false,
+    retry: false,
+  });
+
+  return controller;
+};
+
+export const useGetAllMovieList = (
+  request: FilterRequest & Record<string, any>,
+) => {
+  const controller = useQuery({
+    queryKey: ["get-all-movie-list"],
+    queryFn: () => homeService.getAllMovieList(request),
+    enabled: false,
+    retry: false,
+  });
+
+  return controller;
+};
+
+export const useGetSearch = (
+  request: FilterRequest & Record<string, any>,
+) => {
+  const controller = useQuery({
+    queryKey: ["get-search"],
+    queryFn: () => homeService.getSearch(request),
     enabled: false,
     retry: false,
   });

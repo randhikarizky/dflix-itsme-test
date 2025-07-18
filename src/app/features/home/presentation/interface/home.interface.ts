@@ -26,3 +26,22 @@ export const sortFilterOptions: SelectOption[] = [
     value: "vote_count",
   },
 ];
+
+export const movieCategoryOptions: SelectOption[] = [
+  {
+    label: "Now Playing",
+    value: "now_playing"
+  },
+  {
+    label: "Popular",
+    value: "popular"
+  },
+  {
+    label: "Top Rated",
+    value: "top_rated"
+  },
+  {
+    label: "Upcoming",
+    value: "upcoming"
+  },
+]

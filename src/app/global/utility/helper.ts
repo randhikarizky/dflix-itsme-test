@@ -45,6 +45,12 @@ export function toSentenceCase(str: string) {
     .replace(/^./, (match) => match.toUpperCase());
 }
 
+export function toCamelCase(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/[_-\s]+(.)?/g, (_, chr) => (chr ? chr.toUpperCase() : ""));
+}
+
 export const copy = (name: string, value: string) => {
   navigator.clipboard.writeText(value);
 
@@ -65,4 +71,14 @@ export const objectKeyRemover = (obj: any = {}, removeKey: any = []) => {
     target[i] = obj[i];
   }
   return target;
+};
+
+export const objectKeyConverter = (obj: any = {}) => {
+  return Object.entries(obj).reduce(
+    (acc, [key, value]) => {
+      acc[toCamelCase(key)] = value;
+      return acc;
+    },
+    {} as Record<string, any>,
+  );
 };

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { enqueueSnackbar } from "notistack";
 import React from "react";
 import { Stack, Typography } from "@mui/material";
@@ -10,6 +10,21 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+api.interceptors.request.use(
+  function (config: InternalAxiosRequestConfig) {
+    if (config.headers) {
+      const token = `${process.env.NEXT_PUBLIC_API_KEY}`
+      if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+      }
+    }
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  },
+);
 
 api.interceptors.response.use((response: AxiosResponse) => {
   if (response.data.code !== 200) {
@@ -41,32 +56,6 @@ api.interceptors.response.use(
       return Promise.reject(response.data.message);
     } else {
       if (response.data.code !== 200 && response.data.code !== 0) {
-        if (response.data instanceof Blob === false) {
-          enqueueSnackbar({
-            message: React.createElement(
-              Stack,
-              {
-                direction: "column",
-                spacing: 0,
-                justifyContent: "flex-start",
-              },
-              [
-                React.createElement(
-                  Typography,
-                  { variant: "h6" },
-                  "Terjadi Kesalahan. Silakan coba kembali.",
-                ),
-                React.createElement(
-                  Typography,
-                  { variant: "caption", color: "text.secondary" },
-                  response.data.message,
-                ),
-              ],
-            ),
-            variant: "error",
-            autoHideDuration: 3000,
-          });
-        }
 
         if (response.data.message) {
           return Promise.reject(response.data?.message);

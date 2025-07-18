@@ -1,5 +1,5 @@
 export interface BaseResponse {
-  createdAt: string;
+  createdAt?: string;
   updatedAt?: string | null;
   id?: any;
 }

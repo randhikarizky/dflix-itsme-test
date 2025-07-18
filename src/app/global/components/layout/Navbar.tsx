@@ -69,7 +69,6 @@ export default function Navbar() {
         }}
       >
         <Container
-          maxWidth={false}
           sx={{
             height: 1,
             display: "flex",

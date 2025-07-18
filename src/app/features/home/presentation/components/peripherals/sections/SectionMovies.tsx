@@ -6,24 +6,13 @@ import {
   Box,
   Typography,
   Grid,
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
-  Avatar,
   Pagination,
-  IconButton,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Button,
-  Tooltip,
+  Skeleton,
 } from "@mui/material";
 import dayjs from "dayjs";
-import { Icon } from "@/app/global/components";
 import { sortFilterOptions } from "../../../interface/home.interface";
-import { toSentenceCase } from "@/app/global/utility/helper";
+import MovieCard from "../card/MovieCard";
+import DiscoverFilter from "../filter/DiscoverFilter";
 
 export default function SectionMovies() {
   const {
@@ -67,43 +56,38 @@ export default function SectionMovies() {
               Curated by Members
             </Typography>
           </Box>
-          <Box component={Stack} direction="row" spacing={1}>
-            <FormControl size="small" disabled={DataList.isFetching}>
-              <InputLabel>Sort by</InputLabel>
-              <Select
-                value={sortBy}
-                onChange={(e) => {
-                  setSortBy(e.target.value);
-                }}
-                label="Sort by"
-              >
-                {sortFilterOptions.map((d) => (
-                  <MenuItem value={d.value}>{d.label}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <Tooltip title={toSentenceCase(orderBy)}>
-              <Button
-                color="secondary"
-                onClick={() => setOrderBy(orderBy == "asc" ? "desc" : "asc")}
-                sx={{
-                  minWidth: "2rem",
-                }}
-                disabled={DataList.isFetching}
-              >
-                <Icon
-                  width={18}
-                  icon={
-                    orderBy == "asc"
-                      ? "tabler:sort-ascending"
-                      : "tabler:sort-descending"
-                  }
-                />
-              </Button>
-            </Tooltip>
-          </Box>
+
+          <DiscoverFilter
+            DataList={DataList}
+            params={{
+              sortBy,
+              setSortBy,
+              sortOptions: sortFilterOptions,
+              orderBy,
+              setOrderBy,
+            }}
+          />
         </Stack>
       </Box>
+      {DataList.isFetching && (
+        <Grid
+          container
+          spacing={2}
+          columns={{ sm: 1, md: 5 }}
+          justifyContent="center"
+        >
+          {Array.from({ length: 20 }, (_, i) => (
+            <Grid key={i} size={Math.floor(5 / Math.min(20, 5))}>
+              <Skeleton
+                sx={{
+                  height: 375,
+                  transform: "unset",
+                }}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      )}
       {DataList.data !== undefined &&
         DataList.data !== null &&
         DataList.data.data.length > 0 && (
@@ -123,26 +107,16 @@ export default function SectionMovies() {
                     )}
                     sx={{ cursor: "pointer" }}
                   >
-                    <Stack>
-                      <Avatar
-                        alt={`Poster of ${d.title}`}
-                        variant="rounded"
-                        src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${d.posterPath}`}
-                        sx={{
-                          height: "100%",
-                          width: "auto",
-                        }}
-                      />
-
-                      <Box>
-                        <Typography variant="subtitle1">{d.title}</Typography>
-                        <Typography variant="body1" color="text.secondary">
-                          {d.releaseDate
-                            ? `(${dayjs(d.releaseDate).format("YYYY")})`
-                            : ""}
-                        </Typography>
-                      </Box>
-                    </Stack>
+                    <MovieCard
+                      data={d}
+                      title={d.title}
+                      subtitle={
+                        d.releaseDate
+                          ? `(${dayjs(d.releaseDate).format("YYYY")})`
+                          : ""
+                      }
+                      poster={d.posterPath}
+                    />
                   </Grid>
                 ))}
               </Grid>

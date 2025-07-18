@@ -73,11 +73,17 @@ export default function SectionMovies() {
         <Grid
           container
           spacing={2}
-          columns={{ sm: 1, md: 5 }}
+          columns={{ sm: 2, md: 5 }}
           justifyContent="center"
         >
           {Array.from({ length: 20 }, (_, i) => (
-            <Grid key={i} size={Math.floor(5 / Math.min(20, 5))}>
+            <Grid
+              key={i}
+              size={{
+                xs: 6,
+                md: Math.floor(5 / Math.min(20, 5)),
+              }}
+            >
               <Skeleton
                 sx={{
                   height: 375,
@@ -96,15 +102,18 @@ export default function SectionMovies() {
               <Grid
                 container
                 spacing={2}
-                columns={{ sm: 1, md: 5 }}
+                columns={{ sm: 2, md: 5 }}
                 justifyContent="center"
               >
                 {DataList.data.data.map((d) => (
                   <Grid
                     key={JSON.stringify(d)}
-                    size={Math.floor(
-                      5 / Math.min(DataList.data.data?.length ?? 12, 5),
-                    )}
+                    size={{
+                      xs: 6,
+                      md: Math.floor(
+                        5 / Math.min(DataList.data.data?.length ?? 12, 5),
+                      ),
+                    }}
                     sx={{ cursor: "pointer" }}
                   >
                     <MovieCard

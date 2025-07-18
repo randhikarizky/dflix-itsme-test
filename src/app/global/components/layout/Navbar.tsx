@@ -45,27 +45,16 @@ export default function Navbar() {
       <Toolbar
         disableGutters
         sx={{
-          minHeight: "auto",
+          height: "5rem",
           backgroundColor: theme.palette.background.default,
           color: theme.palette.text.primary,
           transition: theme.transitions.create(["height", "background-color"], {
             easing: theme.transitions.easing.easeInOut,
             duration: theme.transitions.duration.shorter,
           }),
-          [theme.breakpoints.up("sm")]: {
-            minHeight: "auto",
-          },
-          [theme.breakpoints.up("lg")]: {
-            height: "5rem",
-          },
           [`& .${iconButtonClasses.root}`]: {
             color: theme.palette.text.secondary,
           },
-          ...(offsetTop && {
-            backdropFilter: "blur($6px)",
-            WebkitBackdropFilter: "blur($6px)",
-            backgroundColor: theme.palette.background.default,
-          }),
         }}
       >
         <Container

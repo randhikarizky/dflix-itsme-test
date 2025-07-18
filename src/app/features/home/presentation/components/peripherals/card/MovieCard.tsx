@@ -41,6 +41,7 @@ export default function MovieCard({
             flexGrow: 1,
             flexDirection: "column",
             height: "100%",
+            width: "100%",
             backgroundColor: (theme) => theme.palette.action.disabled,
             borderRadius: (theme) => theme.shape.borderRadius,
             aspectRatio: "2/3",

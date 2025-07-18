@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useGetAllDiscoverMovies } from "../../../controller/home.controller";
+import { useGetAllDiscoverTVs } from "../../../controller/home.controller";
 import { useFetchData } from "@/app/global/hooks/useFetchData";
 import {
   Stack,
@@ -14,7 +14,7 @@ import { sortFilterOptions } from "../../../interface/home.interface";
 import MovieCard from "../card/MovieCard";
 import DiscoverFilter from "../filter/DiscoverFilter";
 
-export default function SectionMovies() {
+export default function SectionTV() {
   const {
     page,
     setPage,
@@ -29,7 +29,7 @@ export default function SectionMovies() {
     orderBy: "asc",
   });
 
-  const DataList = useGetAllDiscoverMovies({
+  const DataList = useGetAllDiscoverTVs({
     page,
     sortBy,
     orderBy,
@@ -51,7 +51,7 @@ export default function SectionMovies() {
           alignItems="center"
         >
           <Box>
-            <Typography variant="h5">Discover Movies</Typography>
+            <Typography variant="h5">Discover TV Shows</Typography>
             <Typography variant="subtitle2" color="text.secondary">
               Curated by Members
             </Typography>
@@ -62,7 +62,13 @@ export default function SectionMovies() {
             params={{
               sortBy,
               setSortBy,
-              sortOptions: sortFilterOptions,
+              sortOptions: sortFilterOptions.map((d) =>
+                d.label === "Release Date"
+                  ? { label: "First Air Date", value: "first_air_date" }
+                  : d.label === "Title"
+                    ? { label: "Title", value: "name" }
+                    : d,
+              ),
               orderBy,
               setOrderBy,
             }}
@@ -109,10 +115,10 @@ export default function SectionMovies() {
                   >
                     <MovieCard
                       data={d}
-                      title={d.title}
+                      title={d.name}
                       subtitle={
-                        d.releaseDate
-                          ? `(${dayjs(d.releaseDate).format("YYYY")})`
+                        d.firstAirDate
+                          ? `(${dayjs(d.firstAirDate).format("YYYY")})`
                           : ""
                       }
                       poster={d.posterPath}

@@ -2,15 +2,20 @@ import {
   FilterRequest,
   List,
   ListDTO,
+  SingleDTO,
 } from "@/app/global/interfaces/datatable.interface";
 import {
   DiscoverMovieEntity,
   DiscoverTVEntity,
+  MovieEntity,
+  TVEntity,
 } from "../../domain/entities/home.entity";
 import { api } from "@/app/global/utility/axios";
 import {
   DiscoverMovieResponse,
   DiscoverTVResponse,
+  MovieResponse,
+  TVResponse,
 } from "../response/home.response";
 import {
   objectKeyConverter,
@@ -137,6 +142,30 @@ export const homeAPI = {
         currentPage: response.data.page,
       },
     };
+
+    return mapped;
+  },
+
+  async getByMovieID(request: Record<string, any>): Promise<MovieEntity> {
+    const response = await api.get<MovieResponse>(
+      `${process.env.NEXT_PUBLIC_ENDPOINT}/movie/${request.id}`,
+    );
+
+    const { data } = response;
+
+    const mapped = objectKeyConverter(data) as MovieEntity;
+
+    return mapped;
+  },
+
+  async getBySeriesID(request: Record<string, any>): Promise<TVEntity> {
+    const response = await api.get<TVResponse>(
+      `${process.env.NEXT_PUBLIC_ENDPOINT}/tv/${request.id}`,
+    );
+
+    const { data } = response;
+
+    const mapped = objectKeyConverter(data) as TVEntity;
 
     return mapped;
   },

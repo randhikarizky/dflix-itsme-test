@@ -2,7 +2,12 @@ import {
   FilterRequest,
   List,
 } from "@/app/global/interfaces/datatable.interface";
-import { DiscoverMovieEntity, DiscoverTVEntity } from "../entities/home.entity";
+import {
+  DiscoverMovieEntity,
+  DiscoverTVEntity,
+  MovieEntity,
+  TVEntity,
+} from "../entities/home.entity";
 
 export interface HomeRepository {
   getAllDiscoverMovies(
@@ -20,4 +25,7 @@ export interface HomeRepository {
   getSearch(
     request: FilterRequest & Record<string, any>,
   ): Promise<List<DiscoverTVEntity>>;
+
+  getByMovieID(request: Record<string, any>): Promise<MovieEntity>;
+  getBySeriesID(request: Record<string, any>): Promise<TVEntity>;
 }

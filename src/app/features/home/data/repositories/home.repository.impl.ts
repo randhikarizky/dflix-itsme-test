@@ -5,6 +5,8 @@ import {
 import {
   DiscoverMovieEntity,
   DiscoverTVEntity,
+  MovieEntity,
+  TVEntity,
 } from "../../domain/entities/home.entity";
 import { HomeRepository } from "../../domain/repositories/home.repository";
 import { homeAPI } from "../network/home.api";
@@ -32,6 +34,13 @@ class HomeRepositoryImpl implements HomeRepository {
     request: FilterRequest & Record<string, any>,
   ): Promise<List<DiscoverTVEntity>> {
     return homeAPI.getSearch(request);
+  }
+
+  async getByMovieID(request: Record<string, any>): Promise<MovieEntity> {
+    return homeAPI.getByMovieID(request);
+  }
+  async getBySeriesID(request: Record<string, any>): Promise<TVEntity> {
+    return homeAPI.getBySeriesID(request);
   }
 }
 

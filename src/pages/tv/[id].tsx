@@ -4,7 +4,7 @@ import HeadComponent from "@/app/global/components/Head";
 const DetailMovie: NextPage = () => {
   return (
     <>
-      <HeadComponent title={"Movie Detail"} />
+      <HeadComponent title={"TV Series Detail"} />
       <></>
     </>
   );
